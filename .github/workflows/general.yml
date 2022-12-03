@@ -14,7 +14,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-
+  DEV_SHELL_NAME: CI
 jobs:
   test:
     name: Test
@@ -36,6 +36,9 @@ jobs:
       SQLX_VERSION: 0.6.2
       SQLX_FEATURES: "rustls,postgres"
     steps:
+      - name: "Setup env"
+        uses: JRMurr/direnv-nix-action@v2 
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
