@@ -36,8 +36,6 @@ jobs:
       SQLX_VERSION: 0.6.2
       SQLX_FEATURES: "rustls,postgres"
     steps:
-      - name: "Setup env"
-        uses: JRMurr/direnv-nix-action@v2 
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -58,6 +56,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+
+      - name: "Setup env"
+        uses: JRMurr/direnv-nix-action@v2 
 
       - name: Cache sqlx-cli
         uses: actions/cache@v2
