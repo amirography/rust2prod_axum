@@ -1,11 +1,14 @@
-use rust2prod_amir::run;
+use rust2prod_amir::{configuration::get_configuration, run};
 use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    let listener = TcpListener::bind("127.0.0.1:0")
+    let configuration = get_configuration().expect("failed to read configuration");
+
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", configuration.application_port))
         .await
-        .expect("shiiiiiiiiiiiiiit");
+        .expect("failed to bind to port");
+
     run(listener).await?;
     Ok(())
 }

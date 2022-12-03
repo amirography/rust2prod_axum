@@ -1,5 +1,6 @@
 //! tests/health_check.rs
-use rust2prod_amir::run;
+use rust2prod_amir::{configuration::get_configuration, run};
+use sqlx::{Connection, PgConnection};
 use tokio::net::TcpListener;
 
 #[tokio::test]
@@ -18,7 +19,14 @@ async fn health_check_works() {
 
 #[tokio::test]
 async fn subscribe_returns_a_200_for_valid_form_data() {
-    let address = spawn_app().await;
+    let address = spawn_app();
+    let configuration = get_configuration().expect("Failed to read configuration");
+    let connection_string = configuration.database.connection_string();
+
+    let mut connection = PgConnection::connect(&connection_string)
+        .await
+        .expect("failed to connect to postgres");
+
     let client = reqwest::Client::builder()
         .use_rustls_tls()
         .build()
@@ -27,7 +35,7 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
 
     let response = {
         client
-            .post(&format!("{}/subscriptions", &address))
+            .post(&format!("{}/subscriptions", &address.await))
             .header("Content-Type", "application/x-www-form-urlencoded")
             .body(body)
             .send()
@@ -36,6 +44,14 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
     };
 
     assert!(response.status().is_success());
+
+    let saved = sqlx::query!("SELECT email , name FROM subscriptions",)
+        .fetch_one(&mut connection)
+        .await
+        .expect("Failed to fetch subscriptions.");
+
+    assert_eq!(saved.email, "ursula_le_guin@gmail.com");
+    assert_eq!(saved.name, "le guin");
 }
 
 #[tokio::test]

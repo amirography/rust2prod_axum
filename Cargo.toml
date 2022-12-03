@@ -15,7 +15,9 @@ name = "rust2prod_amir"
 
 [dependencies]
 axum = "0.6.0"
+config = "0.13.2"
 serde = { version = "1.0.148", features = ["derive"] }
+sqlx = { version = "0.6.2", default-features = false, features = ["runtime-tokio-rustls", "macros", "postgres", "chrono", "migrate", "uuid"] }
 tokio = { version = "1.22.0", features = ["rt-multi-thread", "tokio-macros", "macros"] }
 
 [dev-dependencies]

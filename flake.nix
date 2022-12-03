@@ -216,37 +216,6 @@
               command = "psql -h localhost -p ${dbPort} -U ${dbUser} ${dbName}";
             }
           ];
-
-          #   shellHook =
-          #     ''
-          #       # this ensures that every executed command is printed on screen
-          #       # set -x
-          #       # exits on the first fail
-          #       # set -eo pipefail
-          #     ''
-          #     + ''
-          #       if [ "$(echo "0")" == "$(echo "$( docker container ls --filter=name=${dbContainerName} -a -q)" | wc -l)" ] ; then
-          #         docker run \
-          #         -e POSTGRES_USER=${dbUser} \
-          #         -e POSTGRES_PASSWORD=${dbPassword} \
-          #         -e POSTGRES_DB=${dbName} \
-          #         --name ${dbContainerName} \
-          #         -p "${dbPort}":5432 \
-          #         -d postgres \
-          #         postgres -N 1000
-          #       else
-          #           docker start ${dbContainerName}
-          #       fi
-          #     ''
-          #     + ''
-          #       until psql -h "localhost" -U "${dbUser}" -p "${dbPort}" -d "${dbName}" -c "\q"; do
-          #       # >&2 echo "${dbName} is still unavailable - sleeping"
-          #       sleep 1
-          #       done
-          #       >&2 echo "Postgres is up and running on port ${dbPort}!"
-          #     ''
-          #     + "\n"
-          #     + " sqlx migrate run";
         };
     });
 }
