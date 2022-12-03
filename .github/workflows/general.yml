@@ -161,6 +161,7 @@ jobs:
       - name: Migrate database
         run: |
           sudo apt-get install libpq-dev -y
+          sqlx database create
           sqlx migrate run
 
       - name: Run clippy
