@@ -1,11 +1,11 @@
-use rust2prod_amir::{configuration::get_configuration, run};
-use sqlx::{Connection, PgConnection};
+use rust2prod_amir::{configuration::get_configuration, startup::run};
+use sqlx::PgPool;
 use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
     let configuration = get_configuration().expect("failed to read configuration");
-    let connection = PgConnection::connect(&configuration.database.connection_string())
+    let connection_pool = PgPool::connect(&configuration.database.connection_string())
         .await
         .expect("could not connect to the database");
 
@@ -13,6 +13,6 @@ async fn main() -> Result<(), std::io::Error> {
         .await
         .expect("failed to bind to port");
 
-    run(listener, connection).await?;
+    run(listener, connection_pool).await?;
     Ok(())
 }
