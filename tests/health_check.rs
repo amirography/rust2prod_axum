@@ -1,7 +1,9 @@
 //! tests/health_check.rs
+use once_cell::sync::Lazy;
 use rust2prod_amir::{
     configuration::{get_configuration, DatabaseSettings},
     startup::run,
+    telemetry::{get_subscriber, init_subscriber},
 };
 
 use sqlx::{Connection, Executor, PgConnection, PgPool};
@@ -28,12 +30,6 @@ async fn health_check_works() {
 #[tokio::test]
 async fn subscribe_returns_a_200_for_valid_form_data() {
     let app = spawn_app().await;
-    // let configuration = get_configuration().expect("Failed to read configuration");
-    // let connection_string = configuration.database.connection_string();
-
-    // let mut connection = PgConnection::connect(&connection_string)
-    // .await
-    // .expect("failed to connect to postgres");
 
     let client = reqwest::Client::builder()
         .use_rustls_tls()
@@ -93,21 +89,43 @@ pub struct TestApp {
     pub address: String,
     pub db_pool: PgPool,
 }
+static TRACING: Lazy<()> = Lazy::new(|| {
+    let default_filter_filter_level = String::from("info");
+    let subscriber_name = String::from("test");
+    if std::env::var("TEST_LOG").is_ok() {
+        let subscriber = get_subscriber(
+            subscriber_name,
+            default_filter_filter_level,
+            std::io::stdout,
+        );
+        init_subscriber(subscriber);
+    } else {
+        let subscriber =
+            get_subscriber(subscriber_name, default_filter_filter_level, std::io::sink);
+        init_subscriber(subscriber);
+    }
+});
 
 async fn spawn_app() -> TestApp {
-    let listener = TcpListener::bind("127.0.0.1:0")
-        .await
-        .expect("could not bind to a listener");
+    Lazy::force(&TRACING);
+    let mut configuration = get_configuration().expect("failed to read configuration.");
+    configuration.database.database_name = Uuid::new_v4().to_string();
+
+    let listener = match TcpListener::bind(format!("127.0.0.1:0")).await {
+        Ok(o) => o,
+        Err(e) => {
+            tracing::error!("could not bind to address: {:?} ", e);
+            panic!("{e} : {}", &configuration.application_port);
+        }
+    };
 
     let address = format!(
         "http://127.0.0.1:{}",
         listener
             .local_addr()
-            .expect("could notget the local address")
+            .expect("Could not get the local address")
             .port()
     );
-    let mut configuration = get_configuration().expect("failed to read configuration.");
-    configuration.database.database_name = Uuid::new_v4().to_string();
     let connection_pool = configure_database(&configuration.database).await;
     let server = run(listener, connection_pool.clone());
     let _server = tokio::spawn(server);

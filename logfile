@@ -1,0 +1,61 @@
+2022-12-08 12:08:10.797 +0330 [24081] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:08:10.798 +0330 [24081] LOG:  listening on Unix socket "/home/a/kapa/pro/2022-11-23-rust2prod/rust2prod_axum/.data/postgres/.s.PGSQL.5432"
+2022-12-08 12:08:10.801 +0330 [24082] LOG:  database system was shut down at 2022-12-08 12:07:04 +0330
+2022-12-08 12:08:10.805 +0330 [24081] LOG:  database system is ready to accept connections
+2022-12-08 12:11:49.811 +0330 [26023] FATAL:  lock file "postmaster.pid" already exists
+2022-12-08 12:11:49.811 +0330 [26023] HINT:  Is another postmaster (PID 24081) running in data directory "/home/a/kapa/pro/2022-11-23-rust2prod/rust2prod_axum/.data/postgres"?
+2022-12-08 12:12:08.017 +0330 [24081] LOG:  received fast shutdown request
+2022-12-08 12:12:08.018 +0330 [24081] LOG:  aborting any active transactions
+2022-12-08 12:12:08.023 +0330 [24081] LOG:  background worker "logical replication launcher" (PID 24088) exited with exit code 1
+2022-12-08 12:12:08.023 +0330 [24083] LOG:  shutting down
+2022-12-08 12:12:08.038 +0330 [24081] LOG:  database system is shut down
+2022-12-08 12:12:12.515 +0330 [26144] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:12:12.516 +0330 [26144] LOG:  listening on Unix socket "/home/a/kapa/pro/2022-11-23-rust2prod/rust2prod_axum/.data/postgres/.s.PGSQL.5432"
+2022-12-08 12:12:12.523 +0330 [26145] LOG:  database system was shut down at 2022-12-08 12:12:08 +0330
+2022-12-08 12:12:12.532 +0330 [26144] LOG:  database system is ready to accept connections
+2022-12-08 12:22:43.618 +0330 [34347] FATAL:  lock file "postmaster.pid" already exists
+2022-12-08 12:22:43.618 +0330 [34347] HINT:  Is another postmaster (PID 26144) running in data directory "/home/a/kapa/pro/2022-11-23-rust2prod/rust2prod_axum/.data/postgres"?
+2022-12-08 12:22:57.727 +0330 [26144] LOG:  received fast shutdown request
+2022-12-08 12:22:57.765 +0330 [26144] LOG:  aborting any active transactions
+2022-12-08 12:22:57.769 +0330 [26144] LOG:  background worker "logical replication launcher" (PID 26151) exited with exit code 1
+2022-12-08 12:22:57.770 +0330 [26146] LOG:  shutting down
+2022-12-08 12:22:57.789 +0330 [26144] LOG:  database system is shut down
+2022-12-08 12:23:03.443 +0330 [34497] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:23:03.444 +0330 [34497] LOG:  listening on Unix socket "/home/a/kapa/pro/2022-11-23-rust2prod/rust2prod_axum/.data/postgres/.s.PGSQL.5432"
+2022-12-08 12:23:03.450 +0330 [34498] LOG:  database system was shut down at 2022-12-08 12:22:57 +0330
+2022-12-08 12:23:03.460 +0330 [34497] LOG:  database system is ready to accept connections
+2022-12-08 12:23:59.209 +0330 [34497] LOG:  received SIGHUP, reloading configuration files
+2022-12-08 12:27:59.398 +0330 [34497] LOG:  could not open file "postmaster.pid": No such file or directory
+2022-12-08 12:27:59.398 +0330 [34497] LOG:  performing immediate shutdown because data directory lock file is invalid
+2022-12-08 12:27:59.398 +0330 [34497] LOG:  received immediate shutdown request
+2022-12-08 12:27:59.398 +0330 [34497] LOG:  could not open file "postmaster.pid": No such file or directory
+2022-12-08 12:27:59.398 +0330 [34503] LOG:  could not open temporary statistics file "pg_stat/global.tmp": No such file or directory
+2022-12-08 12:27:59.414 +0330 [34497] LOG:  database system is shut down
+2022-12-08 12:28:41.090 +0330 [37213] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:28:41.091 +0330 [37213] LOG:  could not bind IPv6 address "::1": Address already in use
+2022-12-08 12:28:41.091 +0330 [37213] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-12-08 12:28:41.091 +0330 [37213] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2022-12-08 12:28:41.091 +0330 [37213] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2022-12-08 12:28:41.091 +0330 [37213] WARNING:  could not create listen socket for "localhost"
+2022-12-08 12:28:41.091 +0330 [37213] FATAL:  could not create any TCP/IP sockets
+2022-12-08 12:28:41.096 +0330 [37213] LOG:  database system is shut down
+2022-12-08 12:30:18.791 +0330 [38280] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:30:18.792 +0330 [38280] LOG:  listening on IPv6 address "::1", port 5432
+2022-12-08 12:30:18.792 +0330 [38280] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2022-12-08 12:30:18.793 +0330 [38280] FATAL:  could not create lock file "/run/postgresql/.s.PGSQL.5432.lock": No such file or directory
+2022-12-08 12:30:18.796 +0330 [38280] LOG:  database system is shut down
+2022-12-08 12:39:28.060 +0330 [40193] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:39:28.060 +0330 [40193] LOG:  listening on IPv6 address "::1", port 5432
+2022-12-08 12:39:28.060 +0330 [40193] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2022-12-08 12:39:28.061 +0330 [40193] FATAL:  could not create lock file "/run/postgresql/.s.PGSQL.5432.lock": No such file or directory
+2022-12-08 12:39:28.064 +0330 [40193] LOG:  database system is shut down
+2022-12-08 12:40:52.196 +0330 [40762] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:40:52.197 +0330 [40762] LOG:  listening on IPv6 address "::1", port 5432
+2022-12-08 12:40:52.197 +0330 [40762] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2022-12-08 12:40:52.198 +0330 [40762] FATAL:  could not create lock file "/run/postgresql/.s.PGSQL.5432.lock": Permission denied
+2022-12-08 12:40:52.201 +0330 [40762] LOG:  database system is shut down
+2022-12-08 12:41:41.064 +0330 [41021] LOG:  starting PostgreSQL 14.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.0, 64-bit
+2022-12-08 12:41:41.064 +0330 [41021] LOG:  listening on IPv6 address "::1", port 5432
+2022-12-08 12:41:41.064 +0330 [41021] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2022-12-08 12:41:41.065 +0330 [41021] FATAL:  could not create lock file "/run/postgresql/.s.PGSQL.5432.lock": Permission denied
+2022-12-08 12:41:41.068 +0330 [41021] LOG:  database system is shut down

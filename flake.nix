@@ -39,8 +39,6 @@
       # macos dependencies or frameworks.
       buildInputs =
         [
-          # pkgs.openssl
-          # pkgs.pkg-config
         ]
         ++ lib.optionals stdenv.isDarwin (lib.attrVals ["libiconv"] pkgs);
 
@@ -107,7 +105,7 @@
       devShells.default = let
         dbUser = "postgres";
         dbPassword = "password";
-        dbPort = "5433";
+        dbPort = "5432";
         dbName = "newsletter";
         dbContainerName = "postgres_rust2prod";
       in let
@@ -115,6 +113,7 @@
       in
         pkgs.devshell.mkShell {
           name = "default development shell";
+          # imports = ["${devshell}/extra/services/postgres.nix"];
 
           env = [
             {
@@ -151,6 +150,18 @@
               name = "PGPASSWORD";
               value = dbPassword;
             }
+            {
+              name = "POSTGRES_USER";
+              value = dbUser;
+            }
+            {
+              name = "POSTGRES_PASSWORD";
+              value = dbPassword;
+            }
+            {
+              name = "POSTGRES_DB";
+              value = dbName;
+            }
           ];
 
           # inputsFrom = builtins.attrValues self.checks;
@@ -158,14 +169,14 @@
           packages = with pkgs; [
             # openssl
             # pkg-config
-            cargo
-            rustc
-            cargo
+            # rustc
+            # cargo
             sqlx-cli
+            bunyan-rs
           ];
           commands = [
             {
-              name = "pgcreate";
+              name = "dockerpgcreate";
               category = "postgres";
               help = "|> Creates a docker container for postgresql with the name of ${dbContainerName}.";
               command = ''
@@ -181,7 +192,7 @@
             }
 
             {
-              name = "pgstart";
+              name = "dockerpgstart";
               category = "postgres";
               help = "|> Starts and already existing postgresql docker container which has the name of ${dbContainerName}.";
               command = ''
@@ -190,11 +201,19 @@
             }
 
             {
-              name = "pgkill";
+              name = "dockerpgkill";
               help = "|> Kills the postgres container with the name of ${dbContainerName}.";
               category = "postgres";
               command = ''
                 docker kill ${dbContainerName}
+              '';
+            }
+            {
+              name = "localpgauth";
+              command = ''
+                sudo -u  postgres psql --command="ALTER USER ${dbUser} WITH PASSWORD '${dbPassword}'"
+
+                sudo -u postgres psql --command="CREATE DATABASE ${dbUser}" # for some reason it needs it
               '';
             }
 
@@ -216,6 +235,13 @@
               command = "psql -h localhost -p ${dbPort} -U ${dbUser} ${dbName}";
             }
           ];
+          # services.postgres = {
+          #   setupPostgresOnStartup = true;
+          #   initdbArgs = [
+          #     "--allow-group-access"
+          #     "--no-locale"
+          #   ];
+          # };
         };
     });
 }

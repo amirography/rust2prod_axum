@@ -15,6 +15,7 @@ pub struct DatabaseSettings {
     pub host: String,
     pub database_name: String,
 }
+
 impl DatabaseSettings {
     pub fn connection_string(&self) -> String {
         format!(
