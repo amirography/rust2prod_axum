@@ -1,0 +1,18 @@
+{
+  "db": "PostgreSQL",
+  "2d8be1f055037d2ca59c18393d3fd5e775132062a34d3d3679b3d7984fd31009": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Uuid",
+          "Text",
+          "Text",
+          "Timestamptz"
+        ]
+      }
+    },
+    "query": "\n            INSERT INTO subscriptions (id, email, name, subscribed_at)\n            VALUES($1, $2, $3, $4)\n        "
+  }
+}
