@@ -1,5 +1,5 @@
 [package]
-name = "rust2prod_amir"
+name = "rust2prod"
 version = "0.1.0"
 edition = "2021"
 
@@ -11,7 +11,7 @@ path = "src/lib.rs"
 
 [[bin]]
 path = "src/main.rs"
-name = "rust2prod_amir"
+name = "rust2prod"
 
 [dependencies]
 axum = { version = "0.6.0", features = ["http2"] }
@@ -31,3 +31,7 @@ uuid = { version = "1.2.2", features = ["v4"] }
 [dev-dependencies]
 once_cell = "1.16.0"
 reqwest = { version = "0.11.13", default-features = false, features = ["rustls-tls" ] }
+
+[http]
+proxy = "socks5://127.0.0.1:1080"
+

@@ -1,5 +1,5 @@
 {
-  description = "rust2prod_axum";
+  description = "rust2prod";
 
   inputs = {
     # to access packages from repo
