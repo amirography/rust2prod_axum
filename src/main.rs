@@ -1,27 +1,17 @@
-use rust2prod::{configuration::get_configuration, startup::run, telemetry};
-use sqlx::PgPool;
-use tokio::net::TcpListener;
+use rust2prod::{configuration::get_configuration, startup::Application, telemetry};
 
 #[tokio::main]
-async fn main() -> Result<(), std::io::Error> {
+async fn main() -> std::io::Result<()> {
     let subscriber = telemetry::get_subscriber(
         String::from("rust2prod"),
         String::from("info"),
         std::io::stdout,
     );
+
     telemetry::init_subscriber(subscriber);
 
-    let configuration = get_configuration().expect("failed to read configuration");
-    let connection_pool = PgPool::connect_lazy(&configuration.database.connection_string())
-        .expect("could not connect to the database");
-
-    let listener = TcpListener::bind(format!(
-        "{}:{}",
-        configuration.application.host, configuration.application.port
-    ))
-    .await
-    .expect("failed to bind to port");
-
-    run(listener, connection_pool).await?;
+    let configuration = get_configuration().expect("Failed to read configuration");
+    let server = Application::build(configuration).await?;
+    server.run_until_stopped().await?;
     Ok(())
 }
